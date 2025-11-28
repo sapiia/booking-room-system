@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     bookingsList = document.getElementById('bookings-list');
     loadBookingsBtn = document.getElementById('load-bookings');
     searchEmail = document.getElementById('search-email');
+    console.log('Debug: searchEmail element found:', !!searchEmail);
+    if (searchEmail) {
+        console.log('Debug: searchEmail.disabled:', searchEmail.disabled);
+        console.log('Debug: searchEmail.readOnly:', searchEmail.readOnly);
+        console.log('Debug: searchEmail.style.pointerEvents:', searchEmail.style.pointerEvents);
+    }
     toast = document.getElementById('toast');
     toastMessage = document.getElementById('toast-message');
     toastClose = document.getElementById('toast-close');
@@ -26,8 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Event listeners
     bookingForm.addEventListener('submit', handleBooking);
+    console.log('Debug: Adding event listener to loadBookingsBtn');
     loadBookingsBtn.addEventListener('click', loadBookings);
     toastClose.addEventListener('click', hideToast);
+
+    // Add event listener to searchEmail for Enter key
+    if (searchEmail) {
+        searchEmail.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                console.log('Debug: Enter key pressed on searchEmail, triggering loadBookings');
+                loadBookings();
+            }
+        });
+    }
 });
 
 // Load all rooms from the API
